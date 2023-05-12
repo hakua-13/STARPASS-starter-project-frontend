@@ -1,6 +1,10 @@
 import React from 'react';
+import { ethers } from 'ethers';
 
-export const Header = ({currentAccount, setCurrentAccount}) =>{
+import { CONTRACT_ADDRESS } from '../../domains/contractAddress';
+import contractABI from '../../domains/contractABI.json'
+
+export const Header = ({currentAccount, setCurrentAccount, setContract}) =>{
   const handleConnectWallet = async() => {
     try{
       const { ethereum } = window;
@@ -12,6 +16,15 @@ export const Header = ({currentAccount, setCurrentAccount}) =>{
       if(accounts.length > 0){
         console.log('connect!');
         setCurrentAccount(accounts[0]);
+
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(
+          CONTRACT_ADDRESS,
+          contractABI.abi,
+          signer
+        )
+        setContract(contract);
       }else{
         console.log('can not connecting...')
       }

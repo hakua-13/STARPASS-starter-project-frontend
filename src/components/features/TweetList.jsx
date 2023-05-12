@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ethers } from 'ethers';
 
 import { CONTRACT_ADDRESS } from '../../domains/contractAddress';
@@ -57,8 +57,10 @@ export const TweetList = ({contract, tweetData, setTweetData}) => {
   }
 
   useEffect(() => {
-    getAllPost();
-  }, []);
+    if(contract){
+      getAllPost();
+    }
+  }, [contract]);
 
   return(
     <>

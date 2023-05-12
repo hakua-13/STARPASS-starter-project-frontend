@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
 
 import './App.css';
 import contractABI from './domains/contractABI.json';
 import { TweetList } from './components/features/TweetList';
 import { TweetForm } from './components/features/TweetForm';
 import { Header } from './components/features/Header';
-
 
 function App() {
   const CONTRACT_ADDRESS = '0x1da9F8f34F035264711b2536eF185141588E38c6';
@@ -44,7 +42,6 @@ function App() {
           contractABI.abi,
           signer
         )
-
         setContract(contract);
       }
     }catch(error){
@@ -52,8 +49,6 @@ function App() {
       console.log(error);
     }
   }
-
-  
 
   useEffect(() => {
     if(contract){
@@ -71,7 +66,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header currentAccount={currentAccount} setCurrentAccount={setCurrentAccount}/>
+      <Header currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} setContract={setContract}/>
 
       <TweetForm contrct={contract}/>
       <TweetList contract={contract} tweetData={tweetData} setTweetData={setTweetData}/>

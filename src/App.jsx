@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 
-import './App.css';
+// import './App.css';
 import contractABI from './domains/contractABI.json';
 import { TweetList } from './components/features/TweetList';
 import { TweetForm } from './components/features/TweetForm';
 import { Header } from './components/features/Header';
+import { HeaderSample } from './components/features/HeaderSample';
+import { DropMenu } from './components/features/DropMenu';
 
 function App() {
   const CONTRACT_ADDRESS = '0x1da9F8f34F035264711b2536eF185141588E38c6';
@@ -65,11 +67,19 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="flex flex-col mx-auto my-0 text-center items-center App">
       <Header currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} setContract={setContract}/>
-
-      <TweetForm contrct={contract}/>
-      <TweetList contract={contract} tweetData={tweetData} setTweetData={setTweetData}/>
+      {currentAccount?(
+        <>
+          <TweetForm/>
+          <TweetList contract={contract} tweetData={tweetData} setTweetData={setTweetData}/>
+        </>
+      ):(
+        <>
+          <p className='mt-4'>Walletが接続されていません...</p>
+        </>
+      )}
+      
     </div>
   );
 }

@@ -35,12 +35,14 @@ export const Header = ({currentAccount, setCurrentAccount, setContract}) =>{
   }
 
   return(
-    <>
+    // <div className='h-32 shadow-xl w-full border-style border'>
+    <div className='relative w-full p-2 pr-10 shadow flex justify-between '>
+      <p className='p-3'>uwitter</p>
       {currentAccount ?(
-        <p>connect済み</p>
+        <p className='p-3 text-neutral-700'>conected</p>
       ):(
-        <button onClick={handleConnectWallet}>Connect Wallet</button>
+        <button className='p-3 text-neutral-700 hover:bg-gray-100 rounded-full' onClick={handleConnectWallet}>Connect Wallet</button>
       )}
-    </>
+    </div>
   )
 }

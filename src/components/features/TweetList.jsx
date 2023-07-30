@@ -35,16 +35,14 @@ export const TweetList = ({contract, tweetData, setTweetData}) => {
         signer
       )
 
-      console.log('getAllPost');
-      const tweetData = await contract.getAllPost();
-      console.log('finish getAllPost');
+      const [ tweetData, tweetLikedStatus ] = await contract.getAllPost();
       let tweetDataCleaned = tweetData.map((tweet, i) => {
         const datetime = new Date(tweet.time.toNumber() * 1000);
         return{
-          id: tweet.postId.toNumber(),
+          id: i,
           message: tweet.message,
           totalLike: tweet.totalLike.toNumber(),
-          isLike: tweet.isLike,
+          isLike: tweetLikedStatus[i],
           time: datetime,
           posterAddr: tweet.posterAddr,
         }
@@ -98,12 +96,12 @@ export const TweetList = ({contract, tweetData, setTweetData}) => {
       {tweetData.length>0? (
         <>
           {tweetData.map((tweet, index) => (
-            <div key={tweet.id} className='border-b border-inherit p-4 text-left'>
+            <div key={ `${tweet.time}-${tweet.posterAddr}`} className='border-b border-inherit p-4 text-left'>
                 <p>{tweet.posterAddr}</p>
                 <p className='py-2'>{tweet.message}</p>
                 <div className='flex items-center gap-4'>
                   <div
-                    onClick={() => handleLike(index, tweet.isLike)}
+                    onClick={() => handleLike(tweet.id, tweet.isLike)}
                     className={
                       `fa-heart cursor-pointer ${tweet.isLike ?
                       'fas text-pink-600':
